@@ -1,5 +1,5 @@
 import pygame
-from constants import *
+from common.constants import *
 from player import Player
 import asteroidfield
 from asteroid import Asteroid

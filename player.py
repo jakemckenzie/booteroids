@@ -1,6 +1,6 @@
 import pygame
 from circleshape import CircleShape
-from constants import *
+from common.constants import *
 from shot import Shot
 from wrap import wrap_position
 
