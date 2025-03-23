@@ -30,7 +30,7 @@ class Player(CircleShape):
 
   
   def draw(self, screen): 
-    pygame.draw.polygon(screen, "white", self.triangle(), 2)
+    pygame.draw.polygon(screen, (255, 0, 0), self.triangle(), 2)
 
   def shoot(self):
     if self.shoot_timer <= 0:
