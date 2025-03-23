@@ -17,7 +17,7 @@ def print_startup():
 def update_state(state): 
     return {"frame_count": state["frame_count"] + 1}
 
-def draw_screen(screen, state, drawables, background, score):
+def draw_screen(screen, state, drawables, background, score, lives):
 
     screen.blit(background, (0, 0))
     
@@ -25,7 +25,8 @@ def draw_screen(screen, state, drawables, background, score):
         sprite.draw(screen)
 
     font = pygame.font.Font(None, 36)
-    text_surface = font.render(f"Frame: {state['frame_count']} Score: {score}", True, (255, 0, 0))
+    hud_text = f"Frame: {state['frame_count']} Score: {score} Lives: {lives}"
+    text_surface = font.render(hud_text, True, (255, 0, 0))
     screen.blit(text_surface, (20, 20))
     
     pygame.display.flip()
@@ -61,6 +62,7 @@ def main():
     state = {"frame_count": 0}    
 
     score = 0
+    lives = 3
 
     running = True
     while running:
@@ -73,11 +75,7 @@ def main():
         
         updatables.update(dt)
 
-        for asteroid in asteroids:
-            if player.collides_with(asteroid):
-                print("Game over!")
-                pygame.quit()
-                sys.exit()
+        
         for asteroid in asteroids:
             for shot in shots:
                 if asteroid.collides_with(shot):
@@ -90,9 +88,25 @@ def main():
                     asteroid.split()
                     shot.kill()
 
-        
+        collision_detected = False
+        for asteroid in asteroids:
+            if player.collides_with(asteroid):
+                collision_detected = True
+                break
+
+        if collision_detected:
+            lives -= 1
+            if lives > 0:
+                print(f"Respawning... Lives remaining: {lives}")
+                player.position = pygame.Vector2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+                player.velocity = pygame.Vector2(0, 0)
+                player.rotation = 0
+            else:
+                print("Game Over!")
+                pygame.quit()
+                sys.exit()
         state = update_state(state)
-        draw_screen(screen, state, drawables, background, score)
+        draw_screen(screen, state, drawables, background, score, lives)
         
     pygame.quit()
 
