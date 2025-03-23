@@ -10,6 +10,20 @@ class Player(CircleShape):
     self.rotation = 0
     self.shoot_timer = 0.0
 
+    self.base_image = pygame.image.load("boots.png").convert_alpha()
+
+    scale_factor = (self.radius * 2) / self.base_image.get_width() 
+    
+    new_width  = int(2 *self.base_image.get_width()  * scale_factor)
+    new_height = int(2 * self.base_image.get_height() * scale_factor)
+
+
+    self.base_image = pygame.transform.scale(self.base_image, (new_width, new_height))
+
+    self.width = new_width
+    self.height = new_height
+
+    self.rect = self.base_image.get_rect(center=(int(self.position.x), int(self.position.y)))
 
   def rotate(self, dt): 
     self.rotation += PLAYER_TURN_SPEED * dt
@@ -17,20 +31,20 @@ class Player(CircleShape):
   def move(self, dt):
     forward = pygame.Vector2(0, 1).rotate(self.rotation)
     self.position += forward * PLAYER_SPEED * dt
-
-  def triangle(self):
-    forward = pygame.Vector2(0, 1).rotate(self.rotation)
-    right = pygame.Vector2(0, 1).rotate(self.rotation + 90) * (self.radius / 1.5)
-
-    a = self.position + forward * self.radius
-    b = self.position - forward * self.radius - right
-    c = self.position - forward * self.radius + right
-
-    return [a, b, c]
-
   
   def draw(self, screen): 
-    pygame.draw.polygon(screen, (255, 0, 0), self.triangle(), 2)
+    # Rotates boots by -self.rotation to give you the proper boots field
+    rotated_image = pygame.transform.rotate(self.base_image, -self.rotation)
+
+    # If your "forward" vector is (0, 1) with self.rotation rotated onto it, 
+    # that usually is rotating clockwise within screen space. 
+    # pygame.transform.rotate(surface, angle) actually turns images counterclockwise, 
+    # though. Omitting the rotation angle or subtracting the rotation angle makes it 
+    # stay correct with your present direction logic.
+    rect = rotated_image.get_rect()
+    rect.center = (self.position.x, self.position.y)
+
+    screen.blit(rotated_image, rect)
 
   def shoot(self):
     if self.shoot_timer <= 0:
@@ -52,3 +66,4 @@ class Player(CircleShape):
 
     if keys[pygame.K_SPACE]:
       self.shoot()
+    
