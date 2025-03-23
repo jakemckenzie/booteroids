@@ -1,5 +1,29 @@
+import math
+
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
+FPS = 60
+
+
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
+GRAY = (200, 200, 200)
+BROWN = (139, 69, 19)
+
+PLAYER_ROTATION_SPEED = math.radians(3)  # rotation speed (radians per frame)
+PLAYER_THRUST = 0.1  # acceleration per frame when thrusting
+
+SHOT_SPEED = 5.0       # initial speed of shots
+SHOT_LIFETIME = 60     # lifetime of a shot in frames
+
+ASTEROID_COUNT = 5     # initial number of asteroids
+ASTEROID_SPEED_MIN = 1.0
+ASTEROID_SPEED_MAX = 3.0
+ASTEROID_RADIUS = 20
+
+PLAYER_COLLISION_RADIUS = 10
+SHOT_COLLISION_RADIUS = 5
+ASTEROID_COLLISION_RADIUS = ASTEROID_RADIUS
 
 PLAYER_RADIUS = 20
 PLAYER_TURN_SPEED = 300
