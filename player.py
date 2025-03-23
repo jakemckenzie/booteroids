@@ -2,6 +2,7 @@ import pygame
 from circleshape import CircleShape
 from constants import *
 from shot import Shot
+from wrap import wrap_position
 
 class Player(CircleShape):
   def __init__(self, x, y):
@@ -68,4 +69,4 @@ class Player(CircleShape):
 
     if keys[pygame.K_SPACE]:
       self.shoot()
-    
+    self.position = wrap_position(self.position, SCREEN_WIDTH, SCREEN_HEIGHT)
