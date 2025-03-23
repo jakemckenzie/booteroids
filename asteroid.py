@@ -8,7 +8,17 @@ class Asteroid(CircleShape):
   def __init__(self, x, y, radius):
     super().__init__(x, y, radius)
 
-    asteroid_images = ["badcop.png", "lane.png", "prime.png", "teej.png", "trshpuppy.png", "allan.png", "dan.png", "hunter.png", "matt.png"]
+    asteroid_images = [
+      "assets/badcop.png", 
+      "assets/lane.png", 
+      "assets/prime.png", 
+      "assets/teej.png", 
+      "assets/trshpuppy.png", 
+      "assets/allan.png", 
+      "assets/dan.png", 
+      "assets/hunter.png", 
+      "assets/matt.png"
+      ]
 
     chosen_image = random.choice(asteroid_images)
 

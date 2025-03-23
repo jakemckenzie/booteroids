@@ -38,7 +38,7 @@ def main():
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     clock = pygame.time.Clock()
 
-    background_raw = pygame.image.load("background.png").convert()
+    background_raw = pygame.image.load("assets/background.png").convert()
     background = pygame.transform.scale(background_raw, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
     # Updatables: Contains sprites that need to run game logic (movement, state changes, physics, etc.).

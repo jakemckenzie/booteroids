@@ -11,7 +11,7 @@ class Player(CircleShape):
     self.rotation = 0
     self.shoot_timer = 0.0
 
-    self.base_image = pygame.image.load("boots.png").convert_alpha()
+    self.base_image = pygame.image.load("assets/boots.png").convert_alpha()
 
     scale_factor = (self.radius * 2) / self.base_image.get_width() 
     
