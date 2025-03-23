@@ -10,8 +10,7 @@ def print_startup():
     print(f"Screen height: {SCREEN_HEIGHT}")
 
 
-def update_state(state):
-    return {"frame_count": state["frame_count"] + 1}
+def update_state(state): return {"frame_count": state["frame_count"] + 1}
 
 def draw_screen(screen, state, player):
 
@@ -31,10 +30,19 @@ def main():
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     clock = pygame.time.Clock()
 
+    # Updatables: Contains sprites that need to run game logic (movement, state changes, physics, etc.).
+    # Drawables: Contains sprites that only need to be drawn on the screen.
+    # Some sprites might not require an update every frame, or their update logic might be different from 
+    # how they are drawn. Keeping them in separate groups allows you to call update() or draw() only on the 
+    # relevant collection keeping a separation of concerns:
+    # https://mzaks.medium.com/separation-of-concerns-e00f89fdc277
+    updatables = pygame.sprite.Group()
+    drawables = pygame.sprite.Group()
+
+    Player.containers = (updatables, drawables)
+
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
-    state = {"frame_count": 0}
-    
-    dt = 0    
+    state = {"frame_count": 0}    
 
     running = True
     while running:
@@ -46,9 +54,9 @@ def main():
         
         player.update(dt)
         state = update_state(state)
+
         draw_screen(screen, state, player)
         
-
     pygame.quit()
 
 
