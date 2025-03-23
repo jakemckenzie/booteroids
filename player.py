@@ -27,10 +27,7 @@ class Player(CircleShape):
 
   def rotate(self, dt): 
     self.rotation += PLAYER_TURN_SPEED * dt
-  
-  def move(self, dt):
-    forward = pygame.Vector2(0, 1).rotate(self.rotation)
-    self.position += forward * PLAYER_SPEED * dt
+
   
   def draw(self, screen): 
     # Rotates boots by -self.rotation to give you the proper boots field
@@ -57,12 +54,17 @@ class Player(CircleShape):
 
     keys = pygame.key.get_pressed()
 
-    if keys[pygame.K_w]: self.move(dt)
-    if keys[pygame.K_s]: self.move(-dt)
+    forward = pygame.Vector2(0, 1).rotate(self.rotation)
 
+    if keys[pygame.K_w]: self.velocity += forward * PLAYER_ACCELERATION * dt
+    if keys[pygame.K_s]: self.velocity -= forward * PLAYER_ACCELERATION * dt
 
-    if keys[pygame.K_a]: self.rotation  += 180 * dt
-    if keys[pygame.K_d]: self.rotation  -= 180 * dt
+    self.velocity *= (1 - PLAYER_FRICTION * dt)
+
+    self.position += self.velocity * dt
+
+    if keys[pygame.K_a]: self.rotation  += PLAYER_TURN_SPEED  * dt
+    if keys[pygame.K_d]: self.rotation  -= PLAYER_TURN_SPEED  * dt
 
     if keys[pygame.K_SPACE]:
       self.shoot()
