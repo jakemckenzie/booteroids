@@ -3,6 +3,7 @@ from constants import *
 from player import Player
 import asteroidfield
 from asteroid import Asteroid
+import sys
 
 def print_startup():
     # Starting Booteroids!
@@ -61,6 +62,12 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+        for asteroid in asteroids:
+            if player.collides_with(asteroid):
+                print("Game over!")
+                pygame.quit()
+                sys.exit()
+        
         
         player.update(dt)
         state = update_state(state)
