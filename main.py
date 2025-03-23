@@ -17,9 +17,9 @@ def print_startup():
 def update_state(state): 
     return {"frame_count": state["frame_count"] + 1}
 
-def draw_screen(screen, state, drawables):
+def draw_screen(screen, state, drawables, background):
 
-    screen.fill("black")
+    screen.blit(background, (0, 0))
     
     for sprite in drawables:
         sprite.draw(screen)
@@ -36,6 +36,9 @@ def main():
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     clock = pygame.time.Clock()
+
+    background_raw = pygame.image.load("background.png").convert()
+    background = pygame.transform.scale(background_raw, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
     # Updatables: Contains sprites that need to run game logic (movement, state changes, physics, etc.).
     # Drawables: Contains sprites that only need to be drawn on the screen
@@ -81,7 +84,7 @@ def main():
 
         
         state = update_state(state)
-        draw_screen(screen, state, drawables)
+        draw_screen(screen, state, drawables, background)
         
     pygame.quit()
 
