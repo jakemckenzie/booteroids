@@ -10,13 +10,13 @@ WHITE = (255, 255, 255)
 GRAY = (200, 200, 200)
 BROWN = (139, 69, 19)
 
-PLAYER_ROTATION_SPEED = math.radians(3)  # rotation speed (radians per frame)
-PLAYER_THRUST = 0.1  # acceleration per frame when thrusting
+PLAYER_ROTATION_SPEED = math.radians(3)
+PLAYER_THRUST = 0.1
 
-SHOT_SPEED = 5.0       # initial speed of shots
-SHOT_LIFETIME = 60     # lifetime of a shot in frames
+SHOT_SPEED = 5.0
+SHOT_LIFETIME = 60
 
-ASTEROID_COUNT = 5     # initial number of asteroids
+ASTEROID_COUNT = 10
 ASTEROID_SPEED_MIN = 1.0
 ASTEROID_SPEED_MAX = 3.0
 ASTEROID_RADIUS = 20
@@ -33,7 +33,7 @@ PLAYER_FRICTION = 0.5
 
 ASTEROID_MIN_RADIUS = 20
 ASTEROID_KINDS = 3
-ASTEROID_SPAWN_RATE = 0.8
+ASTEROID_SPAWN_RATE = 1.2
 ASTEROID_MAX_RADIUS = ASTEROID_MIN_RADIUS * ASTEROID_KINDS
 
 SHOT_RADIUS = 5
