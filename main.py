@@ -63,6 +63,7 @@ def main():
 
     score = 0
     lives = 3
+    paused = False
 
     running = True
     while running:
@@ -72,21 +73,23 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_p:
+                paused = not paused
         
-        updatables.update(dt)
 
-        
-        for asteroid in asteroids:
-            for shot in shots:
-                if asteroid.collides_with(shot):
-                    if asteroid.radius > ASTEROID_MIN_RADIUS * 1.5:
-                        score += SCORE_LARGE
-                    elif asteroid.radius > ASTEROID_MIN_RADIUS:
-                        score += SCORE_MEDIUM
-                    else:
-                        score += SCORE_SMALL
-                    asteroid.split()
-                    shot.kill()
+        if not paused:
+            updatables.update(dt)
+            for asteroid in asteroids:
+                for shot in shots:
+                    if asteroid.collides_with(shot):
+                        if asteroid.radius > ASTEROID_MIN_RADIUS * 1.5:
+                            score += SCORE_LARGE
+                        elif asteroid.radius > ASTEROID_MIN_RADIUS:
+                            score += SCORE_MEDIUM
+                        else:
+                            score += SCORE_SMALL
+                        asteroid.split()
+                        shot.kill()
 
         collision_detected = False
         for asteroid in asteroids:
