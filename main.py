@@ -17,7 +17,7 @@ def print_startup():
 def update_state(state): 
     return {"frame_count": state["frame_count"] + 1}
 
-def draw_screen(screen, state, drawables, background):
+def draw_screen(screen, state, drawables, background, score):
 
     screen.blit(background, (0, 0))
     
@@ -25,7 +25,7 @@ def draw_screen(screen, state, drawables, background):
         sprite.draw(screen)
 
     font = pygame.font.Font(None, 36)
-    text_surface = font.render(f"Frame: {state['frame_count']}", True, (255, 0, 0))
+    text_surface = font.render(f"Frame: {state['frame_count']} Score: {score}", True, (255, 0, 0))
     screen.blit(text_surface, (20, 20))
     
     pygame.display.flip()
@@ -60,6 +60,8 @@ def main():
     asteroid_field = asteroidfield.AsteroidField()
     state = {"frame_count": 0}    
 
+    score = 0
+
     running = True
     while running:
         dt = clock.tick(60) / 1000.0
@@ -79,12 +81,18 @@ def main():
         for asteroid in asteroids:
             for shot in shots:
                 if asteroid.collides_with(shot):
+                    if asteroid.radius > ASTEROID_MIN_RADIUS * 1.5:
+                        score += SCORE_LARGE
+                    elif asteroid.radius > ASTEROID_MIN_RADIUS:
+                        score += SCORE_MEDIUM
+                    else:
+                        score += SCORE_SMALL
                     asteroid.split()
                     shot.kill()
 
         
         state = update_state(state)
-        draw_screen(screen, state, drawables, background)
+        draw_screen(screen, state, drawables, background, score)
         
     pygame.quit()
 
