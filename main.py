@@ -25,7 +25,7 @@ def draw_screen(screen, state, drawables, background):
         sprite.draw(screen)
 
     font = pygame.font.Font(None, 36)
-    text_surface = font.render(f"Frame: {state['frame_count']}", True, (255, 255, 255))
+    text_surface = font.render(f"Frame: {state['frame_count']}", True, (255, 0, 0))
     screen.blit(text_surface, (20, 20))
     
     pygame.display.flip()
