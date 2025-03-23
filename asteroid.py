@@ -7,15 +7,20 @@ class Asteroid(CircleShape):
   def __init__(self, x, y, radius):
     super().__init__(x, y, radius)
 
-    self.rect = pygame.Rect(
-      int(self.position.x - self.radius),
-      int(self.position.y - self.radius),
-      self.radius * 2,
-      self.radius * 2
-    )
+    asteroid_images = ["badcop.png", "lane.png", "prime.png", "teej.png", "trshpuppy.png"]
+
+    chosen_image = random.choice(asteroid_images)
+
+    self.base_image = pygame.image.load(chosen_image).convert_alpha()
+
+    new_size = (int(self.radius * 2), int(self.radius * 2))
+    self.image = pygame.transform.scale(self.base_image, new_size)
+
+    self.rect = self.image.get_rect(center=(int(self.position.x), int(self.position.y)))
 
   def draw(self, screen):
-    pygame.draw.circle(screen, (255, 0, 0), (int(self.position.x), int(self.position.y)), self.radius, 2)
+    self.rect.center = (int(self.position.x), int(self.position.y))
+    screen.blit(self.image, self.rect)
   
   def update(self, dt):
     self.position += self.velocity * dt
